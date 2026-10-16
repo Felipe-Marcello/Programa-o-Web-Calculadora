@@ -4,14 +4,13 @@ const buttons = document.querySelectorAll(".btn");
 let currentInput = "";
 let previousInput = "";
 let operator = "";
-let result = 0;
-let shoudResetDisplay = false;
+let shouldResetDisplay = false;
 
 buttons.forEach(button => {
-    button.addEventListener("click",()=>{
+    button.addEventListener("click", () => {
         const value = button.dataset.value;
 
-        if(!value){
+        if(!value) {
             if(button.id === "clear") clearDisplay();
             if(button.id === "calculate") calculate();
             return;
@@ -19,51 +18,50 @@ buttons.forEach(button => {
 
         if(["+", "-", "*", "/"].includes(value)) {
             setOperator(value);
-
         } else {
             appendNumber(value);
         }
     });
-
 });
 
 function updateDisplay() {
     display.innerText = currentInput || "0";
 }
 
-function appendNumber(number){
+function appendNumber(number) {
     if(currentInput.includes(".") && number === ".") return;
     currentInput += number;
     updateDisplay();
 }
 
-function setOperator(op){
-    if (currentInput ==="") return;
+function setOperator(op) {
+    if (currentInput === "") return;
     operator = op;
     previousInput = currentInput;
-    currentInput ="";
+    currentInput = "";
 }
 
-function clearDisplay(){
+function clearDisplay() {
     currentInput = "";
     previousInput = "";
     operator = "";
+    shouldResetDisplay = false;
     updateDisplay();
 }
 
-function calculate(){
+function calculate() {
     //alert("calculate");
-    if(previousInput === "" || currentInput ==="") return;
+    if(previousInput === "" || currentInput === "") return;
     let result;
     const num1 = parseFloat(previousInput);
     const num2 = parseFloat(currentInput);
     //alert(num1 + " " + );
     switch(operator) {
-        case "+" : result = num1 + num2; break;
-        case "-" : result = num1 - num2; break;
-        case "*" : result = num1 * num2; break;
-        case "/" : result = num1 / num2; break;
-        default: return;
+        case "+":result = num1 + num2;break;
+        case "-":result = num1 - num2;break;
+        case "*":result = num1 * num2;break;
+        case "/":result = num1 / num2;break;
+        default:return;
     }
 
     currentInput = result;
